@@ -1,0 +1,67 @@
+* { box-sizing: border-box; }
+
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 40px;
+}
+
+.container {
+    width: 850px;
+    margin: 0 auto;
+}
+
+h1 { color: #2f6578; }
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+th, td {
+    border: 1px solid #777;
+    padding: 8px 12px;
+    text-align: left;
+}
+
+th { font-weight: bold; }
+
+td:nth-child(2), td:nth-child(3),
+th:nth-child(2), th:nth-child(3) {
+    text-align: right;
+}
+
+button, .btn-add, .btn-update, .btn-remove {
+    padding: 4px 10px;
+    font-size: 13px;
+    cursor: pointer;
+}
+
+.continue-btn, .checkout-btn {
+    display: inline-block;
+    padding: 4px 10px;
+    font-size: 13px;
+    cursor: pointer;
+    text-decoration: none;
+    color: black;
+    background-color: #efefef;
+    border: 1px solid #777;
+    border-radius: 4px;
+}
+
+.continue-btn:hover, .checkout-btn:hover {
+    background-color: #e0e0e0;
+}
+
+.continue-btn { margin-right: 20px; }
+
+.quantity-input {
+    width: 45px;
+    padding: 4px 6px;
+    text-align: center;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+.total-row { font-weight: bold; }
+.total-row td { border-top: 2px solid #2f6578; }

@@ -1,0 +1,6 @@
+services:
+  - type: web
+    name: ch07cart
+    runtime: docker
+    plan: free
+    healthCheckPath: /
