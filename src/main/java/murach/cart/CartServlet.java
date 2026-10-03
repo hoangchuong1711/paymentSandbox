@@ -36,28 +36,48 @@ public class CartServlet extends HttpServlet {
 
         String productCode = request.getParameter("productCode");
         String quantityString = request.getParameter("quantity");
+        String action = request.getParameter("action");
 
         if (productCode != null && !productCode.isEmpty()) {
             Product product = ProductDB.getProduct(productCode);
             if (product != null) {
-                int quantity = 1;
-                if (quantityString != null && !quantityString.isEmpty()) {
+                LineItem existingItem = null;
+                for (LineItem item : cart.getItems()) {
+                    if (item.getProduct().getCode().equals(productCode)) {
+                        existingItem = item;
+                        break;
+                    }
+                }
+
+                if ("increase".equals(action)) {
+                    if (existingItem != null) {
+                        existingItem.setQuantity(existingItem.getQuantity() + 1);
+                    }
+                } else if ("decrease".equals(action)) {
+                    if (existingItem != null) {
+                        if (existingItem.getQuantity() > 1) {
+                            existingItem.setQuantity(existingItem.getQuantity() - 1);
+                        } else {
+                            cart.removeItem(existingItem);
+                        }
+                    }
+                } else if (quantityString == null || quantityString.isEmpty()) {
+                    cart.addItem(new LineItem(product, 1));
+                } else {
+                    int quantity;
                     try {
                         quantity = Integer.parseInt(quantityString);
                     } catch (NumberFormatException e) {
                         quantity = 0;
                     }
-                }
-
-                if (quantity > 0) {
-                    LineItem item = new LineItem(product, quantity);
-                    cart.addItem(item);
-                } else {
-                    for (LineItem item : cart.getItems()) {
-                        if (item.getProduct().getCode().equals(productCode)) {
-                            cart.removeItem(item);
-                            break;
+                    if (quantity > 0) {
+                        if (existingItem != null) {
+                            existingItem.setQuantity(quantity);
+                        } else {
+                            cart.addItem(new LineItem(product, quantity));
                         }
+                    } else if (existingItem != null) {
+                        cart.removeItem(existingItem);
                     }
                 }
                 session.setAttribute("cart", cart);

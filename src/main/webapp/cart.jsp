@@ -28,10 +28,11 @@
                     <c:forEach var="item" items="${cart.items}">
                         <tr>
                             <td>
-                                <form action="cart" method="post" style="display: flex; align-items: center; gap: 5px;">
+                                <form action="cart" method="post" class="quantity-controls">
                                     <input type="hidden" name="productCode" value="${item.product.code}">
-                                    <input type="text" name="quantity" value="${item.quantity}" class="quantity-input">
-                                    <input type="submit" value="Update" class="btn-update">
+                                    <button type="submit" name="action" value="decrease" class="step-btn" aria-label="Giảm số lượng ${item.product.description}">−</button>
+                                    <span class="quantity-value">${item.quantity}</span>
+                                    <button type="submit" name="action" value="increase" class="step-btn" aria-label="Tăng số lượng ${item.product.description}">+</button>
                                 </form>
                             </td>
                             <td>${item.product.description}</td>
@@ -54,7 +55,7 @@
                 </table>
 
                 <p class="instruction">
-                    To change the quantity, enter the new quantity and click on the Update button.
+                    Nhấn − hoặc + để điều chỉnh số lượng. Giảm về 0 sẽ xóa sản phẩm khỏi giỏ.
                 </p>
             </c:otherwise>
         </c:choose>
